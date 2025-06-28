@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShopSmart – Your Digital Grocery Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #2e7d32;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .add-btn { background-color: #4caf50; color: white; }
+    .buy-btn { background-color: #1976d2; color: white; }
+    .delete-btn { background-color: #d32f2f; color: white; }
+    .cart {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🛒 ShopSmart – Your Digital Grocery Store</h1>
+
+<p><a href="https://docs.google.com/spreadsheets/d/1nXcIjOeqs6zE9AbznthdGdOYX8shF_lJlcw6xLeROD8/export?format=xlsx" target="_blank">
+</a></p>
+
+<h2>Available Products</h2>
+<div class="product-grid" id="productGrid">
+  <!-- Product Template -->
+</div>
+
+<div class="cart">
+  <h2>🛍️ Your Cart</h2>
+  <ul id="cartItems"></ul>
+</div>
+
+<script>
+  const products = [
+    {
+      name: "Apples",
+      price: 1.20,
+      image: "https://images.pexels.com/photos/672101/pexels-photo-672101.jpeg?cs=srgb&dl=pexels-mareefe-672101.jpg&fm=jpg"
+    },
+    {
+      name: "Milk",
+      price: 3.49,
+      image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWlsa3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+      name: "Bread",
+      price: 4.99,
+      image: "https://t3.ftcdn.net/jpg/02/01/81/48/360_F_201814865_vm3bbljjbVF2vZDSMIP7l46mKSQROOe9.jpg"
+    },
+    {
+      name: "Eggs",
+      price: 2.50,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxbQwGVPuqXB2yk4He63MSI_CdnjwFT9al0g&s"
+    },
+    {
+      name: "Rice",
+      price: 3.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSao8klaiFQBzvwY3JNcsockUKwN28mN_aycQ&s"
+    },
+    {
+      name: "Soaps",
+      price: 3.99,
+      image: "https://www.peelorange.com/cdn/shop/products/01e9791a-c671-40fa-98b0-cd6654b33a8f_800x.jpg?v=1719315906"
+    },
+    {
+     name: "Potatoes",
+     price: 3.99,
+     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI7t2YvyHFQgaI_hiHdCsZ1RNUvQnMVrpfRA&s"
+    },
+    {
+     name: "Onions",
+      price: 3.99,
+      image: "https://www.bbassets.com/media/uploads/p/xl/10000148_33-fresho-onion.jpg"
+    },
+    {
+     name: "Tomatoes",
+      price: 3.99,
+      image: "https://media.istockphoto.com/id/847335116/photo/tomatoes-on-the-vine.jpg?s=612x612&w=0&k=20&c=XspM2ySvUfqjnt7HL5qKyn0tyRb5qLsf1GAP6-3xQsw="
+    },
+    {
+      name: "Chocolates",
+      price: 3.99,
+      image: "https://www.fnp.com/images/pr/l/v20240125182450/chocolates-basket-arrangement_6.jpg"
+    },
+    {
+      name: "Dry Fruits",
+      price: 3.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKoCCbYSsB8o7d9INkDfahcoy-m98LkWwjTQ&s"
+    },
+    {
+      name: "Ice Creams",
+      price: 3.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmoMj74C2e5v3q-zRoGhqf-W2gCiKsktQlKA&s"
+    },
+    {
+      name: "Cool Drinks",
+      price: 3.99,
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHRqUyHSAAmGv8PvCLWi6BTWbFK7w2TVS-NQ&s"
+    },
+    {
+      name: "Mangoes",
+      price: 3.99,
+      image: "https://www.melissas.com/cdn/shop/files/4-pounds-image-of-honey-mangos-fruit-1125637415_512x512.jpg?v=1738768090"
+    },
+    {
+      name: "Sweets",
+      price: 3.99,
+      image: "https://thumbs.dreamstime.com/b/colorful-indian-sweets-plate-assorted-vibrant-colors-including-pink-orange-hues-363530951.jpg"
+    },
+    {
+      name: "Detergents",
+      price: 3.99,
+      image: "https://t3.ftcdn.net/jpg/04/35/65/78/360_F_435657841_ceDTgNEZAY8lVbwK6ESCmTzfKpNQG1Uj.jpg"
+    }
+];
+
+  const cart = [];
+
+  function renderProducts() {
+    const grid = document.getElementById("productGrid");
+    products.forEach((product, index) => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>Price: $${product.price.toFixed(2)}</p>
+        <button class="add-btn" onclick="addToCart(${index})">Add to Cart</button>
+        <button class="buy-btn" onclick="buyNow('${product.name}')">Buy Now</button>
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  function addToCart(index) {
+    cart.push(products[index]);
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartList = document.getElementById("cartItems");
+    cartList.innerHTML = "";
+    cart.forEach((item, idx) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${item.name} - $${item.price.toFixed(2)} 
+        <button class="delete-btn" onclick="removeFromCart(${idx})">Delete</button>`;
+      cartList.appendChild(li);
+    });
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  function buyNow(productName) {
+    alert(`Thank you for buying ${productName}!`);
+  }
+
+  renderProducts();
+</script>
+
+</body>
+</html>
